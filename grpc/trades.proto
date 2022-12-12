@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package tradesPackage;
+
+message Stock {
+  int32 id = 1;
+  int32 price = 2;
+  int32 quantity = 3;
+  string name = 4;
+}
+
+message SelectStock {
+  string name = 1;
+}
+
+message Stocks {
+  repeated Stock stocks = 1;
+}
+
+message PurchaseHistory {
+  repeated Stock purchasehistory = 1;
+}
+
+message Void {}
+
+service Trades {
+  rpc getStock(SelectStock) returns (Stock);
+
+  rpc getStockStream(SelectStock) returns (stream Stock);
+
+  rpc getStocks(Void) returns (Stocks);
+
+  rpc buyStock(Stock) returns (PurchaseHistory);
+
+  rpc buyStockStream(stream Stock) returns (stream PurchaseHistory);
+}
+
